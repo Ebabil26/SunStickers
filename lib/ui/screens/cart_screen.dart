@@ -1,25 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:sun_stickers/states/shared/_shared.dart';
 
 import '../../data/_data.dart';
 import '../../ui_kit/_ui_kit.dart';
 import '../_ui.dart';
 
-class CartScreen extends StatelessWidget {
-  CartScreen({super.key});
-  var cartItems = AppData.cartItems;
-  double taxes = 5.0;
+class CartScreen extends ConsumerWidget {
+  const CartScreen({super.key});
+
+  static const _taxes = 5.0;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final cartItems = ref.watch(sharedProvider).cart;
+
     return Scaffold(
       appBar: _appBar(context),
       body: EmptyWrapper(
         title: "Empty cart",
         isEmpty: cartItems.isEmpty,
-        child: _cartListView(context),
+        child: _cartListView(context, ref),
       ),
-      bottomNavigationBar: cartItems.isEmpty? const SizedBox.shrink() : _bottomAppBar(context),
+      bottomNavigationBar: cartItems.isEmpty
+          ? const SizedBox.shrink()
+          : _bottomAppBar(context, ref),
     );
   }
 
@@ -32,18 +38,23 @@ class CartScreen extends StatelessWidget {
     );
   }
 
-  Widget _cartListView(BuildContext context) {
+  Widget _cartListView(BuildContext context, WidgetRef ref) {
+    final cartItems = ref.watch(sharedProvider).cart;
+
     return ListView.separated(
       padding: const EdgeInsets.all(30),
       itemCount: cartItems.length,
       itemBuilder: (_, index) {
         final sticker = cartItems[index];
+
+        final stickerPrice = sticker.quantity * sticker.price;
+
         return Dismissible(
           direction: DismissDirection.endToStart,
           onDismissed: (direction) {
-            if (direction == DismissDirection.endToStart) {
-              print('Удаляем');
-            }
+            if (direction != DismissDirection.endToStart) return;
+
+            ref.read(sharedProvider.notifier).onRemoveFromCartTap(sticker.id);
           },
           key: UniqueKey(),
           background: Row(
@@ -66,7 +77,9 @@ class CartScreen extends StatelessWidget {
             padding: const EdgeInsets.all(5),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-              color: Theme.of(context).brightness == Brightness.dark ? AppColor.dark : Colors.white,
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? AppColor.dark
+                  : Colors.white,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -93,21 +106,33 @@ class CartScreen extends StatelessWidget {
                   children: [
                     CounterButton(
                       onIncrementTap: () {
-                        print('Увеличить количество');
+                        final provider = ref.read(sharedProvider.notifier);
+
+                        provider.onIncreaseQuantityTap(sticker.id);
+                        provider.onAddToCartTap(sticker.id);
                       },
                       onDecrementTap: () {
-                        print('Уменьшить количество');
+                        final provider = ref.read(sharedProvider.notifier);
+
+                        provider.onDecreaseQuantityTap(sticker.id);
+                        provider.onAddToCartTap(sticker.id);
                       },
                       size: const Size(24, 24),
                       padding: 0,
                       label: Text(
-                        sticker.quantity.toString(),
+                        ref
+                            .watch(sharedProvider)
+                            .stickers
+                            .firstWhere((e) => e.id == sticker.id)
+                            .quantity
+                            .toString(),
                         style: Theme.of(context).textTheme.displayMedium,
                       ),
                     ),
                     Text(
-                      "\$10",
-                      style: AppTextStyle.h2Style.copyWith(color: AppColor.accent),
+                      "\$$stickerPrice",
+                      style:
+                          AppTextStyle.h2Style.copyWith(color: AppColor.accent),
                     )
                   ],
                 )
@@ -122,7 +147,15 @@ class CartScreen extends StatelessWidget {
     );
   }
 
-  Widget _bottomAppBar(BuildContext context) {
+  Widget _bottomAppBar(BuildContext context, WidgetRef ref) {
+    final cartItems = ref.watch(sharedProvider).cart;
+
+    final priceWithoutTaxes = cartItems.map((sticker) {
+      return sticker.quantity * sticker.price;
+    }).reduce((value, element) => value + element);
+
+    final totalPrice = priceWithoutTaxes + _taxes;
+
     return ClipRRect(
       borderRadius: const BorderRadius.only(
         topLeft: Radius.circular(30),
@@ -132,7 +165,9 @@ class CartScreen extends StatelessWidget {
           child: SizedBox(
               height: 250,
               child: Container(
-                color: Theme.of(context).brightness == Brightness.dark ? AppColor.dark : Colors.white,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? AppColor.dark
+                    : Colors.white,
                 child: Padding(
                   padding: const EdgeInsets.all(30),
                   child: SingleChildScrollView(
@@ -145,11 +180,13 @@ class CartScreen extends StatelessWidget {
                             children: [
                               Text(
                                 "Subtotal",
-                                style: Theme.of(context).textTheme.headlineSmall,
+                                style:
+                                    Theme.of(context).textTheme.headlineSmall,
                               ),
                               Text(
-                                "\$111",
-                                style: Theme.of(context).textTheme.displayMedium,
+                                "\$$priceWithoutTaxes",
+                                style:
+                                    Theme.of(context).textTheme.displayMedium,
                               ),
                             ],
                           ),
@@ -162,11 +199,13 @@ class CartScreen extends StatelessWidget {
                             children: [
                               Text(
                                 "Taxes",
-                                style: Theme.of(context).textTheme.headlineSmall,
+                                style:
+                                    Theme.of(context).textTheme.headlineSmall,
                               ),
                               Text(
-                                "\$${taxes}",
-                                style: Theme.of(context).textTheme.displayMedium,
+                                "\$$_taxes",
+                                style:
+                                    Theme.of(context).textTheme.displayMedium,
                               ),
                             ],
                           ),
@@ -182,10 +221,11 @@ class CartScreen extends StatelessWidget {
                             children: [
                               Text(
                                 "Total",
-                                style: Theme.of(context).textTheme.displayMedium,
+                                style:
+                                    Theme.of(context).textTheme.displayMedium,
                               ),
                               Text(
-                                "\$120.0",
+                                "\$$totalPrice",
                                 style: AppTextStyle.h2Style.copyWith(
                                   color: AppColor.accent,
                                 ),
@@ -200,7 +240,9 @@ class CartScreen extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 30),
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: ref
+                                  .read(sharedProvider.notifier)
+                                  .onCheckOutTap,
                               child: const Text("Checkout"),
                             ),
                           ),
@@ -211,5 +253,9 @@ class CartScreen extends StatelessWidget {
                 ),
               ))),
     );
+  }
+
+  double stickerPrice(Sticker sticker) {
+    return (sticker.quantity * sticker.price);
   }
 }

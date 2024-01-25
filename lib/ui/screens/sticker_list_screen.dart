@@ -2,22 +2,50 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart' hide Badge;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:sun_stickers/states/_states.dart';
+import 'package:sun_stickers/states/shared/shared_provider.dart';
 import 'package:sun_stickers/ui/_ui.dart';
 
-import '../../data/_data.dart';
 import '../../ui_kit/_ui_kit.dart';
 
 class StickerList extends ConsumerWidget {
-  StickerList({super.key});
+  const StickerList({super.key});
   //var categories = AppData.categories;
-
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    debugPrint('Первая вкладка >> Весь экран');
     return Scaffold(
-      appBar: _appBar(context),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: ref.watch(sharedProvider).light
+              ? const FaIcon(FontAwesomeIcons.moon)
+              : const FaIcon(FontAwesomeIcons.sun),
+          onPressed: ref.read(sharedProvider.notifier).toggleTheme,
+        ),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.location_on_outlined, color: AppColor.accent),
+            Text(
+              "Location",
+              style: Theme.of(context).textTheme.bodyLarge,
+            )
+          ],
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Badge(
+              badgeStyle: const BadgeStyle(badgeColor: AppColor.accent),
+              badgeContent: const Text(
+                "2",
+                style: TextStyle(color: Colors.white),
+              ),
+              position: BadgePosition.topStart(start: -3),
+              child: const Icon(Icons.notifications_none, size: 30),
+            ),
+          )
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: SingleChildScrollView(
@@ -38,7 +66,8 @@ class StickerList extends ConsumerWidget {
                 style: Theme.of(context).textTheme.displaySmall,
               ),
               _categories(context),
-              StickerListView(stickers: ref.read(sharedProvider).stickersByCategory),
+              StickerListView(
+                  stickers: ref.watch(sharedProvider).stickersByCategory),
               Padding(
                 padding: const EdgeInsets.only(top: 25, bottom: 5),
                 child: Row(
@@ -52,7 +81,10 @@ class StickerList extends ConsumerWidget {
                       padding: const EdgeInsets.only(right: 20),
                       child: Text(
                         "See all",
-                        style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: AppColor.accent),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineMedium
+                            ?.copyWith(color: AppColor.accent),
                       ),
                     ),
                   ],
@@ -66,39 +98,6 @@ class StickerList extends ConsumerWidget {
           ),
         ),
       ),
-    );
-  }
-
-  PreferredSizeWidget _appBar(BuildContext context) {
-    return AppBar(
-      leading: IconButton(
-        icon: const FaIcon(FontAwesomeIcons.dice),
-        onPressed: () {},
-      ),
-      title: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(Icons.location_on_outlined, color: AppColor.accent),
-          Text(
-            "Location",
-            style: Theme.of(context).textTheme.bodyLarge,
-          )
-        ],
-      ),
-      actions: [
-        IconButton(
-          onPressed: () {},
-          icon: Badge(
-            badgeStyle: const BadgeStyle(badgeColor: AppColor.accent),
-            badgeContent: const Text(
-              "2",
-              style: TextStyle(color: Colors.white),
-            ),
-            position: BadgePosition.topStart(start: -3),
-            child: const Icon(Icons.notifications_none, size: 30),
-          ),
-        )
-      ],
     );
   }
 
@@ -119,20 +118,23 @@ class StickerList extends ConsumerWidget {
       padding: const EdgeInsets.only(top: 8.0),
       child: SizedBox(
         height: 40,
-        child: Consumer(builder: (_, WidgetRef ref,__){
-          final categories = ref.watch(sharedProvider.select((state) => state.categories));
-          debugPrint('Первая вкладка >> Категории');
+        child: Consumer(builder: (context, WidgetRef ref, __) {
+          final categories =
+              ref.watch(sharedProvider.select((state) => state.categories));
           return ListView.separated(
               scrollDirection: Axis.horizontal,
               itemBuilder: (_, index) {
                 final category = categories[index];
                 return GestureDetector(
-                  onTap: () => ref.read(sharedProvider.notifier).onCategoryTap(category),
+                  onTap: () =>
+                      ref.read(sharedProvider.notifier).onCategoryTap(category),
                   child: Container(
                     width: 100,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: category.isSelected ? AppColor.accent : Colors.transparent,
+                      color: category.isSelected
+                          ? AppColor.accent
+                          : Colors.transparent,
                       borderRadius: const BorderRadius.all(
                         Radius.circular(15),
                       ),
@@ -145,8 +147,8 @@ class StickerList extends ConsumerWidget {
                 );
               },
               separatorBuilder: (_, __) => Container(
-                width: 15,
-              ),
+                    width: 15,
+                  ),
               itemCount: categories.length);
         }),
       ),

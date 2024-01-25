@@ -6,7 +6,7 @@ class StickerCategory extends Equatable {
   final StickerType type;
   final bool isSelected;
 
-  StickerCategory({required this.type, required this.isSelected});
+  const StickerCategory({required this.type, required this.isSelected});
 
   @override
   List<Object?> get props => [type, isSelected];

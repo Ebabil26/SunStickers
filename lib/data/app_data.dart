@@ -6,7 +6,8 @@ import 'models/_models.dart';
 class AppData {
   const AppData._();
 
-  static const dummyText = "Lorem Ipsum is simply dummy text of the printing and typesetting "
+  static const dummyText =
+      "Lorem Ipsum is simply dummy text of the printing and typesetting "
       "industry. Lorem Ipsum has been the industry's standard dummy text ever "
       "since the 1500s, when an unknown printer took a galley of type and "
       "scrambled it to make a type specimen book. It has survived not only five "
@@ -17,7 +18,7 @@ class AppData {
       "of Lorem Ipsum.";
 
   static List<Sticker> stickers = [
-    Sticker(
+    const Sticker(
       id: 1,
       image: AppAsset.apple,
       name: 'Apple',
@@ -30,8 +31,8 @@ class AppData {
       voter: 150,
       cart: false,
     ),
-    Sticker(
-      id:2,
+    const Sticker(
+      id: 2,
       image: AppAsset.ball,
       name: 'Ball',
       price: 15.0,
@@ -43,7 +44,7 @@ class AppData {
       voter: 652,
       cart: false,
     ),
-    Sticker(
+    const Sticker(
       id: 3,
       image: AppAsset.balloon,
       name: 'Balloon',
@@ -56,7 +57,7 @@ class AppData {
       voter: 723,
       cart: false,
     ),
-    Sticker(
+    const Sticker(
       id: 4,
       image: AppAsset.bear,
       name: 'Bear',
@@ -69,7 +70,7 @@ class AppData {
       voter: 456,
       cart: false,
     ),
-    Sticker(
+    const Sticker(
       id: 5,
       image: AppAsset.berry,
       name: 'Strawberry',
@@ -82,7 +83,7 @@ class AppData {
       voter: 650,
       cart: false,
     ),
-    Sticker(
+    const Sticker(
       id: 6,
       image: AppAsset.dandelion,
       name: 'Dandelion',
@@ -95,7 +96,7 @@ class AppData {
       voter: 350,
       cart: false,
     ),
-    Sticker(
+    const Sticker(
       id: 7,
       image: AppAsset.dinosaur,
       name: 'Dinosaur',
@@ -108,7 +109,7 @@ class AppData {
       voter: 265,
       cart: false,
     ),
-    Sticker(
+    const Sticker(
       id: 8,
       image: AppAsset.dolphin,
       name: 'Dolphin',
@@ -121,7 +122,7 @@ class AppData {
       voter: 890,
       cart: false,
     ),
-    Sticker(
+    const Sticker(
       id: 9,
       image: AppAsset.elephant,
       name: 'Elephant',
@@ -134,7 +135,7 @@ class AppData {
       voter: 900,
       cart: false,
     ),
-    Sticker(
+    const Sticker(
       id: 10,
       image: AppAsset.firtree,
       name: 'Fir-tree',
@@ -147,7 +148,7 @@ class AppData {
       voter: 420,
       cart: false,
     ),
-    Sticker(
+    const Sticker(
       id: 11,
       image: AppAsset.fish,
       name: 'Fish',
@@ -160,7 +161,7 @@ class AppData {
       voter: 263,
       cart: false,
     ),
-    Sticker(
+    const Sticker(
       id: 12,
       image: AppAsset.flower,
       name: 'Flower',
@@ -173,7 +174,7 @@ class AppData {
       voter: 560,
       cart: false,
     ),
-    Sticker(
+    const Sticker(
       id: 13,
       image: AppAsset.home,
       name: 'Home',
@@ -186,7 +187,7 @@ class AppData {
       voter: 361,
       cart: false,
     ),
-    Sticker(
+    const Sticker(
       id: 14,
       image: AppAsset.mushroom,
       name: 'Mushroom',
@@ -199,7 +200,7 @@ class AppData {
       voter: 915,
       cart: false,
     ),
-    Sticker(
+    const Sticker(
       id: 15,
       image: AppAsset.pear,
       name: 'Pear',
@@ -212,7 +213,7 @@ class AppData {
       voter: 210,
       cart: false,
     ),
-    Sticker(
+    const Sticker(
       id: 16,
       image: AppAsset.penguin,
       name: 'Penguin',
@@ -225,7 +226,7 @@ class AppData {
       voter: 304,
       cart: false,
     ),
-    Sticker(
+    const Sticker(
       id: 17,
       image: AppAsset.raccoon,
       name: 'Raccoon',
@@ -238,7 +239,7 @@ class AppData {
       voter: 356,
       cart: false,
     ),
-    Sticker(
+    const Sticker(
       id: 18,
       image: AppAsset.snail,
       name: 'Snail',
@@ -251,7 +252,7 @@ class AppData {
       voter: 203,
       cart: false,
     ),
-    Sticker(
+    const Sticker(
       id: 19,
       image: AppAsset.star,
       name: 'Star',
@@ -264,7 +265,7 @@ class AppData {
       voter: 278,
       cart: false,
     ),
-    Sticker(
+    const Sticker(
       id: 20,
       image: AppAsset.train,
       name: 'Train',
@@ -277,7 +278,7 @@ class AppData {
       voter: 734,
       cart: false,
     ),
-    Sticker(
+    const Sticker(
       id: 21,
       image: AppAsset.umbrella,
       name: 'Umbrella',
@@ -290,7 +291,7 @@ class AppData {
       voter: 671,
       cart: false,
     ),
-    Sticker(
+    const Sticker(
       id: 22,
       image: AppAsset.watermelon,
       name: 'Watermelon',
@@ -330,19 +331,15 @@ class AppData {
   ];
 
   static List<StickerCategory> categories = [
-    StickerCategory(type: StickerType.all, isSelected: true),
-    StickerCategory(type: StickerType.toy, isSelected: false),
-    StickerCategory(type: StickerType.fauna, isSelected: false),
-    StickerCategory(type: StickerType.plant, isSelected: false),
-    StickerCategory(type: StickerType.berry, isSelected: false),
-    StickerCategory(type: StickerType.fruit, isSelected: false),
-    StickerCategory(type: StickerType.other, isSelected: false),
+    const StickerCategory(type: StickerType.all, isSelected: true),
+    const StickerCategory(type: StickerType.toy, isSelected: false),
+    const StickerCategory(type: StickerType.fauna, isSelected: false),
+    const StickerCategory(type: StickerType.plant, isSelected: false),
+    const StickerCategory(type: StickerType.berry, isSelected: false),
+    const StickerCategory(type: StickerType.fruit, isSelected: false),
+    const StickerCategory(type: StickerType.other, isSelected: false),
   ];
 
-  static List<Sticker> cartItems = [stickers[0], stickers[1], stickers[2]];
-  static List<Sticker> favoriteItems = [
-    stickers[0].copyWith(favorite: true),
-    stickers[1].copyWith(favorite: true),
-    stickers[2].copyWith(favorite: true)
-  ];
+  static List<Sticker> cartItems = [];
+  static List<Sticker> favoriteItems = [];
 }

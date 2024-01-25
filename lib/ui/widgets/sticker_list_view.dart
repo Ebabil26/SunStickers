@@ -22,8 +22,7 @@ class StickerListView extends StatelessWidget {
             Sticker sticker = isReversed ? stickers.reversed.toList()[index] : stickers[index];
             return GestureDetector(
               onTap: () {
-                print('Клик на карточку');
-                Navigator.of(context).push(MaterialPageRoute(builder: (_) => StickerDetail()));
+                Navigator.of(context).push(MaterialPageRoute(builder: (_) => StickerDetail(sticker: sticker)));
               },
               child: Container(
                 width: 160,

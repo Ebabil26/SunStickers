@@ -37,19 +37,25 @@ dependencies:
   cupertino_icons: ^1.0.2
   equatable: ^2.0.5
   flutter_riverpod: ^2.4.9
+  font_awesome_flutter: ^10.4.0
+  badges: ^3.0.3
+  flutter_rating_bar: ^4.0.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  font_awesome_flutter: ^10.4.0
-  badges: ^3.0.3
-  flutter_rating_bar: ^4.0.1
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  flutter_launcher_icons: ^0.13.1
+
+
+flutter_launcher_icons:
+  ios: true
+  image_path: "assets/images/profile_pic.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

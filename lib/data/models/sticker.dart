@@ -15,7 +15,7 @@ class Sticker extends Equatable{
   final int voter;
   final bool cart;
 
-  Sticker({
+  const Sticker({
     required this.id,
     required this.image,
     required this.name,
@@ -29,9 +29,8 @@ class Sticker extends Equatable{
     required this.cart,
   });
 
-  List<Object?> get props => [id, image, name, price, quantity, favorite, description, score, type, voter, cart];
   @override
-  int get hashCode => id.hashCode^image.hashCode^name.hashCode^price.hashCode^quantity.hashCode^favorite.hashCode^description.hashCode^score.hashCode^type.hashCode^voter.hashCode^cart.hashCode;
+  List<Object?> get props => [id, image, name, price, quantity, favorite, description, score, type, voter, cart];
 
   Sticker copyWith({
     int? id,
