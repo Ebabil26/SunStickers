@@ -6,23 +6,10 @@ import 'package:sun_stickers/ui/_ui.dart';
 import '../../data/_data.dart';
 import '../../ui_kit/_ui_kit.dart';
 
-class StickerList extends StatefulWidget {
-  const StickerList({super.key});
-
-  @override
-  State<StatefulWidget> createState() => StickerListState();
-}
-
-class StickerListState extends State<StickerList> {
+class StickerList extends StatelessWidget {
+  StickerList({super.key});
   var categories = AppData.categories;
 
-  void onCategoryTap(int selectedIndex) {
-    //Меняем выбранную категорию
-    categories.asMap().forEach((index, category) {
-      category.isSelected = index == selectedIndex;
-    });
-    setState(() {});
-  }
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -46,7 +33,7 @@ class StickerListState extends State<StickerList> {
                   "Available for you",
                   style: Theme.of(context).textTheme.displaySmall,
                 ),
-                _categories(),
+                _categories(context),
                 StickerListView(stickers: AppData.stickers),
                 Padding(
                   padding: const EdgeInsets.only(top: 25, bottom: 5),
@@ -122,7 +109,7 @@ class StickerListState extends State<StickerList> {
     );
   }
 
-  Widget _categories() {
+  Widget _categories(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
       child: SizedBox(
@@ -132,9 +119,7 @@ class StickerListState extends State<StickerList> {
             itemBuilder: (_, index) {
               final category = categories[index];
               return GestureDetector(
-                onTap: () {
-                  onCategoryTap(index);
-                },
+                onTap: () {},
                 child: Container(
                   width: 100,
                   alignment: Alignment.center,

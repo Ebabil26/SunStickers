@@ -6,14 +6,8 @@ import '../../data/_data.dart';
 import '../../ui_kit/_ui_kit.dart';
 import '../widgets/_widgets.dart';
 
-class StickerDetail extends StatefulWidget {
-  const StickerDetail({super.key});
-
-  @override
-  State<StickerDetail> createState() => StickerDetailState();
-}
-
-class StickerDetailState extends State<StickerDetail> {
+class StickerDetail extends StatelessWidget {
+  StickerDetail({super.key});
   final sticker = AppData.stickers[0];
 
   @override
@@ -23,7 +17,7 @@ class StickerDetailState extends State<StickerDetail> {
       body: Center(child: Image.asset(sticker.image, scale: 2)),
       floatingActionButton: _floatingActionButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      bottomNavigationBar: _bottomAppBar(),
+      bottomNavigationBar: _bottomAppBar(context),
     );
   }
 
@@ -46,11 +40,11 @@ class StickerDetailState extends State<StickerDetail> {
       elevation: 0.0,
       backgroundColor: AppColor.accent,
       onPressed: () {},
-      child: sticker.isFavorite ? const Icon(AppIcon.heart) : const Icon(AppIcon.outlinedHeart),
+      child: sticker.favorite ? const Icon(AppIcon.heart) : const Icon(AppIcon.outlinedHeart),
     );
   }
 
-  Widget _bottomAppBar() {
+  Widget _bottomAppBar(BuildContext context) {
     return ClipRRect(
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(30),
