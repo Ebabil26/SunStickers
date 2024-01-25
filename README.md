@@ -1,16 +1,20 @@
-# sun_stickers
+# Стикеры SunStickers
+<br/>
+<br/>
+<br/>
+14 шагов логики
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+> - 1  Подсветка выбранной категории
+> - 2  Продукты по категории
+> - 3  Детали: отображение продукта
+> - 4  Детали: количество
+> - 5  Корзина: управление пустой корзиной
+> - 6  Детали: добавление в корзину
+> - 7  Корзина: список в корзине
+> - 8  Корзина: стоимость корзины
+> - 9  Корзина: количество
+> - 10 Корзина: удаление
+> - 11 Корзина: чистка корзина на checkout
+> - 12 Любимые: управление пустым экраном
+> - 13 Детали: Добавление/удаление любимые
+> - 14 Смена темы
