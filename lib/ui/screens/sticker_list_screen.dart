@@ -121,6 +121,8 @@ class StickerList extends ConsumerWidget {
         child: Consumer(builder: (context, WidgetRef ref, __) {
           final categories =
               ref.watch(sharedProvider.select((state) => state.categories));
+          //ref.watch(sharedProvider).categories;
+          debugPrint("дергается категория");
           return ListView.separated(
               scrollDirection: Axis.horizontal,
               itemBuilder: (_, index) {
